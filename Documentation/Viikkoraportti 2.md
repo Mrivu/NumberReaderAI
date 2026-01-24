@@ -1,13 +1,13 @@
-### Työhön käytetty aika: 3h
+### Työhön käytetty aika: 4h
 
 ### Mitä olen tehnyt tällä viikolla?
-- Loin Git repositorion ja tutustuin aiheeseeni.
+- Hain MNIST tietokannasta tarvittavat datasetit.
 
 ### Miten ohjelma on edistynyt?
-- En ole päässyt vielä koodaamaan, mutta poetry on asennettu.
+- Koodasin tavan lukea dataseteistä tietoa.
 
 ### Mitä opin tällä viikolla / tänään?
-- Opin miten Neural Network toimii.
+- Lisää siitä, miten Neural Network toimii.
 
 ### Mikä jäi epäselväksi tai tuottanut vaikeuksia?
 - En osaa sanoa, miten neural networkin aikavaativuus määritellään.
