@@ -1,10 +1,10 @@
-### Työhön käytetty aika: 3h
+### Työhön käytetty aika: 4h
 
 ### Mitä olen tehnyt tällä viikolla?
-- Hain MNIST tietokannasta tarvittavat datasetit.
+- Olen koodannut feed forward funktion
 
 ### Miten ohjelma on edistynyt?
-- Koodasin tavan lukea dataseteistä tietoa.
+- Neuroverkon toimannallisuus on työn alla
 
 ### Mitä opin tällä viikolla / tänään?
 - Lisää siitä, miten Neural Network toimii.
@@ -13,4 +13,4 @@
 - En osaa sanoa, miten neural networkin aikavaativuus määritellään.
 
 ### Mitä teen seuraavaksi?
-Seuraavaksi aloitan koodaamaan Neural Networkkia.
+Seuraavaksi aloitan koodaamaan Cost-funktiota
