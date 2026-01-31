@@ -12,6 +12,9 @@ def get_training_data():
 def get_test_data():
     return test_images, test_labels
 
-def print_random_number():
+def random_image():
     index = random.randrange(0, len(test_images))
-    print(mndata.display(test_images[index]), test_labels[index])
+    return test_images[index], test_labels[index]
+
+def view(image, label):
+    return print(mndata.display(image), "Number : " + str(label))
