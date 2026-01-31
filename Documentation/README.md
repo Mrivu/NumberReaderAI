@@ -2,7 +2,10 @@
 TKT20010 Aineopintojen harjoitustyö: Algoritmit ja tekoäly
 
 # Interface guide
-
+Run the interface with:
+```
+poetry run python3 interface.py 
+```
 The interface allows the user to create and pass data through networks. Currently, the network cannot yet be trained.
 
 #### generate
@@ -24,3 +27,9 @@ poetry run coverage run --branch -m pytest tests
 
 ### Get coverage
 poetry run coverage report -m
+
+### Run Pylint
+poetry run pylint .
+
+### Coverage
+![coverage](coverage.png)

@@ -33,10 +33,10 @@ class Interface():
                 print("Network generated")
                 return input("- Press enter to continue > ")
             case "ff":
-                if self.network == None:
+                if self.network is None:
                     print("Error: No network generated")
                     return input("- Press enter to continue > ")
-                if self.image == None:
+                if self.image is None:
                     answer = self.network.pass_all_layers([np.random.rand()]*784)
                     result = []
                     for i in answer:
@@ -71,9 +71,6 @@ class Interface():
             case _:
                 print("Error: Command not recognized")
                 return input("- Press enter to continue > ")
-
-    def generate_network(self, layers, starting_values):
-        self.network = Network(layers, starting_values)
 
 
 interface = Interface()

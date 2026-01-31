@@ -12,8 +12,8 @@ class Network():
         self.layers_num = len(network_layers)
         self.network_layers = network_layers
         self.weights = [np.random.randn(y, x)
-                        for x, y in zip(network_layers[:-1], network_layers[1:])] 
-        self.biases = [np.random.randn(y, 1) for y in network_layers[1:]] ## 
+                        for x, y in zip(network_layers[:-1], network_layers[1:])]
+        self.biases = [np.random.randn(y, 1) for y in network_layers[1:]]
         self.current_layer = 0
         self.current_layer_values = None
         self.previous_values = []
