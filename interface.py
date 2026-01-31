@@ -20,6 +20,7 @@ class Interface():
         print("- load (load random image from database)")
         print("- view (view loaded image from database)")
         print("- remove (remove loaded image from database)")
+        print("- Read README for more detailed instructions")
         return input("- Enter Command > ")
     
     def handle_commands(self, command):

@@ -70,10 +70,10 @@ class Network():
     def derived_cost_function(self, correct_number, values):
         correct_answer = [0.0]*self.network_layers[-1]
         correct_answer[correct_number] = 1.0
-        cost = 0
+        result = []
         for value, answer in zip(values, correct_answer):
-            cost += 2*(value - answer)
-        return cost
+            result.append(2*(value - answer))
+        return np.array(result)
     
     def softmax(self, output):
         return np.exp(output) / np.sum(np.exp(output))
@@ -97,19 +97,21 @@ class Network():
         al_zl = new_values
         zl_wl = self.previous_values[-1]
 
+        bias = c_al * al_zl
+
         ## Multiple layers?
-        print("c_al: " + str(c_al))
-        print("al_zl: " + str(al_zl))
-        print("zl_wl: " + str(zl_wl))
-        weight_sensitivity = c_al * al_zl * zl_wl
-        bias_sensitivity = c_al * al_zl
+        #print("c_al: " + str(c_al))
+        #print("al_zl: " + str(al_zl))
+        #print("zl_wl: " + str(zl_wl))
+        weight_sensitivity = np.outer(bias, zl_wl)
+        bias_sensitivity = bias
 
         return weight_sensitivity, bias_sensitivity
         
 
 network = Network([10, 5, 5, 3])
 answer = network.pass_all_layers([np.random.rand()]*10)
-print(answer)
+#print(answer)
 #print(network.cost_function(2, answer))
 #print(network.softmax(answer))
-#print(network.backpropagation(2, answer))
+print(network.backpropagation(2, answer))
