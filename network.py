@@ -84,11 +84,13 @@ class Network():
             pass
 
     def backpropagation(self, correct_number, values):
+        weight_change = []
+        bias_change = []
+
+        ## Output Layer
         c_al = self.derived_cost_function(correct_number, values)
 
-        ## Values for derived sigmoid
         weighed_values = np.dot(self.weights[-1], self.previous_values[-1])
-        ## sum(weights*outputs) = np.dot(weights, outputs)
 
         new_values = []
         for weight, bias in zip(weighed_values, self.biases[-1]):
@@ -97,21 +99,38 @@ class Network():
         al_zl = new_values
         zl_wl = self.previous_values[-1]
 
-        bias = c_al * al_zl
+        delta = c_al * al_zl
 
-        ## Multiple layers?
-        #print("c_al: " + str(c_al))
-        #print("al_zl: " + str(al_zl))
-        #print("zl_wl: " + str(zl_wl))
-        weight_sensitivity = np.outer(bias, zl_wl)
-        bias_sensitivity = bias
+        weight_change.append(np.outer(delta, zl_wl))
+        bias_change.append(delta)
 
-        return weight_sensitivity, bias_sensitivity
-        
+        ## Hidden Layers
+        for layer_num in range(1, self.layers_num-1):
+            weighed_values = np.dot(self.weights[-1-layer_num], self.previous_values[-1-layer_num])
+
+            new_values = []
+            for weight, bias in zip(weighed_values, self.biases[-1-layer_num]):
+                new_values.append(self.derived_sigmoid(weight + bias[0]))
+
+            wl = self.weights[-layer_num]
+            new_delta = np.dot(wl.T, delta) * new_values
+            delta = new_delta
+
+            weight_change.append(np.outer(new_delta, self.previous_values[-1-layer_num]))
+            bias_change.append(new_delta)
+
+        weight_change.reverse()
+        bias_change.reverse()
+        return weight_change, bias_change
 
 network = Network([10, 5, 5, 3])
 answer = network.pass_all_layers([np.random.rand()]*10)
 #print(answer)
 #print(network.cost_function(2, answer))
 #print(network.softmax(answer))
-print(network.backpropagation(2, answer))
+w, b = network.backpropagation(2, answer)
+print(len(b))
+for i in b:
+    print(i)
+for i in w:
+    print(i)

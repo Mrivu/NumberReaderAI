@@ -1,16 +1,16 @@
-### Työhön käytetty aika: 4h
+### Työhön käytetty aika: 13h
 
 ### Mitä olen tehnyt tällä viikolla?
-- Olen koodannut feed forward funktion
+- Olen koodannut feed forward ja cost functionin. Olen lisännyt ohjelmaan käyttöliittymän,
 
 ### Miten ohjelma on edistynyt?
-- Neuroverkon toimannallisuus on työn alla
+- Neuroverkon toimannallisuus on työn alla.
 
 ### Mitä opin tällä viikolla / tänään?
 - Lisää siitä, miten Neural Network toimii.
 
 ### Mikä jäi epäselväksi tai tuottanut vaikeuksia?
-- En osaa sanoa, miten neural networkin aikavaativuus määritellään.
+- Backpropagation on monimutkainen kosepti.
 
 ### Mitä teen seuraavaksi?
-Seuraavaksi aloitan koodaamaan Cost-funktiota
+Hion loppuun backpropagationin, että voin kouluttaa neural networkin.
