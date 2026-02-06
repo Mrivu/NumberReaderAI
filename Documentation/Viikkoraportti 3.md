@@ -1,7 +1,7 @@
 ### Työhön käytetty aika: 13h
 
 ### Mitä olen tehnyt tällä viikolla?
-- Olen koodannut feed forward ja cost functionin. Olen lisännyt ohjelmaan käyttöliittymän,
+- Olen koodannut feed forward ja cost functionin. Olen lisännyt ohjelmaan käyttöliittymän.
 
 ### Miten ohjelma on edistynyt?
 - Neuroverkon toimannallisuus on työn alla.

@@ -18,7 +18,7 @@ class Network():
                             for x, y in zip(network_layers[:-1], network_layers[1:])]
         else:
             self.weights = weights
-        if not biases: 
+        if not biases:
             self.biases = [np.random.randn(y, 1) for y in network_layers[1:]]
         else:
             self.biases = biases
@@ -140,9 +140,6 @@ class Network():
         al_zl = new_values
         zl_wl = self.previous_values[-1]
 
-        #onehot = [0]*10
-        #onehot[correct_number] = 1
-
         delta = c_al * al_zl
 
         weight_change.append(np.outer(delta, zl_wl))
@@ -166,15 +163,3 @@ class Network():
         weight_change.reverse()
         bias_change.reverse()
         return weight_change, bias_change
-
-#network = Network([784, 16, 16, 10])
-#print(answer)
-#print(network.cost_function(2, answer))
-#print(network.softmax(answer))
-#w, b = network.backpropagation(2, answer)
-#print(len(b))
-#for i in b:
-#    print(i)
-#for i in w:
-#   print(i)
-#network.gradient_descent(5000)

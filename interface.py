@@ -47,17 +47,26 @@ class Interface():
                 self.biases = list(data["biases"])
                 return input("- Press enter to continue > ")
             case "savew":
-                np.savez_compressed(
-                    "trained_weights.npz",
-                    weights=np.array(self.network.weights, dtype=object),
-                    biases=np.array(self.network.biases, dtype=object),
-                )
+                if self.weights is not None:
+                    np.savez_compressed(
+                        "trained_weights.npz",
+                        weights=np.array(self.network.weights, dtype=object),
+                        biases=np.array(self.network.biases, dtype=object),
+                    )
+                else:
+                    print("Error: No weights initialized")
                 return input("- Press enter to continue > ")
             case "train":
-                self.network.gradient_descent(500000)
+                if self.network is not None:
+                    self.network.gradient_descent(500000)
+                else:
+                    print("Error: No network generated")
                 return input("- Press enter to continue > ")
             case "test":
-                print(self.network.test_network(100))
+                if self.network is not None:
+                    print(self.network.test_network(100))
+                else:
+                    print("Error: No network generated")
                 return input("- Press enter to continue > ")
             case "ff":
                 if self.network is None:
