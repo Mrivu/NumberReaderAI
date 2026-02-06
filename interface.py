@@ -8,6 +8,8 @@ class Interface():
         self.network = None
         self.image = None
         self.label = None
+        self.weights = None
+        self.biases = None
 
     def display_interface(self):
         os.system('cls||clear')
@@ -16,7 +18,11 @@ class Interface():
         print("="*50)
         print("COMMANDS: ")
         print("- generate (generate new network)")
+        print("- getW (get existing weigths)")
+        print("- saveW (take current weights and save them)")
         print("- ff (feed forward - send image through the network or random data if image not loaded)")
+        print("- train (train the neural network)")
+        print("- test (test the neural network)")
         print("- load (load random image from database)")
         print("- view (view loaded image from database)")
         print("- remove (remove loaded image from database)")
@@ -28,9 +34,30 @@ class Interface():
         match str.lower(command):
             case "generate":
                 print("Generating network with neuron layers: 784, 16, 16, 10...")
-                print("Initializing random weights and biases...")
-                self.network = Network([784, 16, 16, 10])
+                if self.biases == None:
+                    print("Initializing random weights and biases...")
+                else:
+                    print("Loading weights and biases")
+                self.network = Network([784, 16, 16, 10], self.weights, self.biases)
                 print("Network generated")
+                return input("- Press enter to continue > ")
+            case "getw":
+                data = np.load("trained_weights.npz", allow_pickle=True)
+                self.weights = list(data["weights"])
+                self.biases = list(data["biases"])
+                return input("- Press enter to continue > ")
+            case "savew":
+                np.savez_compressed(
+                    "trained_weights.npz",
+                    weights=np.array(self.network.weights, dtype=object),
+                    biases=np.array(self.network.biases, dtype=object),
+                )
+                return input("- Press enter to continue > ")
+            case "train":
+                self.network.gradient_descent(100000)
+                return input("- Press enter to continue > ")
+            case "test":
+                print(self.network.test_network(100))
                 return input("- Press enter to continue > ")
             case "ff":
                 if self.network is None:

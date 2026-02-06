@@ -1,5 +1,7 @@
 import numpy as np
 import math
+import random
+import data_handler as dh
 
 ## np.random.randn(x, y)
 ### Create matrix n x columns and y rows with random values
@@ -8,12 +10,18 @@ import math
 ### add lists together: [(a[0], b[0]), (a[1], b[1])]
 
 class Network():
-    def __init__(self, network_layers):
+    def __init__(self, network_layers, weights=None, biases=None):
         self.layers_num = len(network_layers)
         self.network_layers = network_layers
-        self.weights = [np.random.randn(y, x)
-                        for x, y in zip(network_layers[:-1], network_layers[1:])]
-        self.biases = [np.random.randn(y, 1) for y in network_layers[1:]]
+        if not weights:
+            self.weights = [np.random.randn(y, x)
+                            for x, y in zip(network_layers[:-1], network_layers[1:])]
+        else:
+            self.weights = weights
+        if not biases: 
+            self.biases = [np.random.randn(y, 1) for y in network_layers[1:]]
+        else:
+            self.biases = biases
         self.current_layer = 0
         self.current_layer_values = None
         self.previous_values = []
@@ -77,11 +85,41 @@ class Network():
     
     def softmax(self, output):
         return np.exp(output) / np.sum(np.exp(output))
+    
+    def test_network(self, batch_size):
+        test_images, test_labels = dh.get_test_data()
+        accuracy = 0.0
+        for i in range(batch_size):
+            index = random.randint(0, len(test_labels)-1)
+            test_image = test_images[index]
+            test_label = test_labels[index]
+            feed_forward_output = self.pass_all_layers(test_image)
+            softmax = self.softmax(feed_forward_output)
+            prediction = np.argmax(softmax)
+            if prediction == test_label:
+                accuracy += 1.0
+        return accuracy / batch_size
+
 
     def gradient_descent(self, batch_size):
-        batch = batch_size
-        for i in batch:
-            pass
+        train_images, train_labels = dh.get_training_data()
+        for i in range(batch_size):
+            index = random.randint(0, len(train_labels)-1)
+            train_image = train_images[index]
+            train_label = train_labels[index]
+
+            feed_forward_output = self.pass_all_layers(train_image)
+            cost = self.cost_function(train_label, feed_forward_output)
+            weight_change, bias_change = self.backpropagation(train_label, feed_forward_output)
+
+            learning_rate = 0.01
+
+            for layer_num in range(len(self.weights)):
+                self.weights[layer_num] -= learning_rate * weight_change[layer_num]
+                for b in range(len(self.biases[layer_num])):
+                    self.biases[layer_num][b] -= learning_rate * bias_change[layer_num][b]
+            if i % 5 == 0:
+                print("Iter: " + str(i))
 
     def backpropagation(self, correct_number, values):
         weight_change = []
@@ -123,14 +161,14 @@ class Network():
         bias_change.reverse()
         return weight_change, bias_change
 
-network = Network([10, 5, 5, 3])
-answer = network.pass_all_layers([np.random.rand()]*10)
+#network = Network([784, 16, 16, 10])
 #print(answer)
 #print(network.cost_function(2, answer))
 #print(network.softmax(answer))
-w, b = network.backpropagation(2, answer)
-print(len(b))
-for i in b:
-    print(i)
-for i in w:
-    print(i)
+#w, b = network.backpropagation(2, answer)
+#print(len(b))
+#for i in b:
+#    print(i)
+#for i in w:
+#   print(i)
+#network.gradient_descent(5000)
