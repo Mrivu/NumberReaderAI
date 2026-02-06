@@ -34,7 +34,7 @@ class Interface():
         match str.lower(command):
             case "generate":
                 print("Generating network with neuron layers: 784, 16, 16, 10...")
-                if self.biases == None:
+                if self.biases is not None:
                     print("Initializing random weights and biases...")
                 else:
                     print("Loading weights and biases")
@@ -54,7 +54,7 @@ class Interface():
                 )
                 return input("- Press enter to continue > ")
             case "train":
-                self.network.gradient_descent(100000)
+                self.network.gradient_descent(500000)
                 return input("- Press enter to continue > ")
             case "test":
                 print(self.network.test_network(100))
@@ -63,29 +63,23 @@ class Interface():
                 if self.network is None:
                     print("Error: No network generated")
                     return input("- Press enter to continue > ")
-                if self.image is None:
-                    answer = self.network.pass_all_layers([np.random.rand()]*784)
-                    result = []
-                    for i in answer:
-                        result.append(float(i))
-                    print(result)
+                if self.image is not None:
+                    answer = self.network.pass_all_layers(data_handler.grayscale_to_sigmoid(self.image))
+                    prediction = np.argmax(answer)
+                    print("Prediction: " + str(prediction))
+                    print("Correct Label: " + str(self.label))
+                    return input("- Press enter to continue > ")
                 else:
-                    answer = self.network.pass_all_layers(self.image)
-                    result = []
-                    for i in answer:
-                        result.append(float(i))
-                    print(result)
-                    print("Cost: " + str(self.network.cost_function(self.label, answer)))
-                    print("Probabilities: " + str(self.network.softmax(answer)))
+                    print("No image loaded")
                 return input("- Press enter to continue > ")
             case "load":
-                image, label = data_handler.random_image()
+                image, label = data_handler.random_image_test()
                 print("Got image, (" + str(label) + ")")
                 self.image = image
                 self.label = label
                 return input("- Press enter to continue > ")
             case "view":
-                if self.image and self.label:
+                if self.image is not None and self.label is not None:
                     data_handler.view(self.image, self.label)
                 else:
                     print("Error: No image loaded")

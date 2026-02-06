@@ -53,6 +53,7 @@ class Network():
         
         self.previous_values.append(self.current_layer_values)
         self.current_layer_values = new_values
+
         return self.current_layer_values
     
     def pass_all_layers(self, starting_values):
@@ -65,6 +66,7 @@ class Network():
         self.current_layer_values = None
         #self.previous_values = []
 
+        result = self.softmax(result)
         return result
     
     def cost_function(self, correct_number, values):
@@ -87,30 +89,29 @@ class Network():
         return np.exp(output) / np.sum(np.exp(output))
     
     def test_network(self, batch_size):
-        test_images, test_labels = dh.get_test_data()
         accuracy = 0.0
+        ## Fix grayscale value input / 255
         for i in range(batch_size):
-            index = random.randint(0, len(test_labels)-1)
-            test_image = test_images[index]
-            test_label = test_labels[index]
-            feed_forward_output = self.pass_all_layers(test_image)
-            softmax = self.softmax(feed_forward_output)
-            prediction = np.argmax(softmax)
+            test_image, test_label = dh.random_image_test()
+            feed_forward_output = self.pass_all_layers(dh.grayscale_to_sigmoid(test_image))
+            prediction = np.argmax(feed_forward_output)
             if prediction == test_label:
                 accuracy += 1.0
         return accuracy / batch_size
 
 
     def gradient_descent(self, batch_size):
-        train_images, train_labels = dh.get_training_data()
+        accuracy = 0
         for i in range(batch_size):
-            index = random.randint(0, len(train_labels)-1)
-            train_image = train_images[index]
-            train_label = train_labels[index]
+            train_image, train_label = dh.random_image_train()
+            feed_forward_output = self.pass_all_layers(dh.grayscale_to_sigmoid(train_image))
 
-            feed_forward_output = self.pass_all_layers(train_image)
-            cost = self.cost_function(train_label, feed_forward_output)
+            #cost = self.cost_function(train_label, feed_forward_output)
             weight_change, bias_change = self.backpropagation(train_label, feed_forward_output)
+
+            prediction = np.argmax(feed_forward_output)
+            if prediction == train_label:
+                accuracy += 1.0
 
             learning_rate = 0.01
 
@@ -118,8 +119,10 @@ class Network():
                 self.weights[layer_num] -= learning_rate * weight_change[layer_num]
                 for b in range(len(self.biases[layer_num])):
                     self.biases[layer_num][b] -= learning_rate * bias_change[layer_num][b]
-            if i % 5 == 0:
+            if i % 100 == 0:
                 print("Iter: " + str(i))
+                print("Train accuracy: " + str(accuracy / 100))
+                accuracy = 0
 
     def backpropagation(self, correct_number, values):
         weight_change = []
@@ -136,6 +139,9 @@ class Network():
 
         al_zl = new_values
         zl_wl = self.previous_values[-1]
+
+        #onehot = [0]*10
+        #onehot[correct_number] = 1
 
         delta = c_al * al_zl
 
