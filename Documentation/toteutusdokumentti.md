@@ -9,7 +9,7 @@ En ole oiken varma näistä.
 ## Työn mahdolliset puutteet ja parannusehdotukset
 Haluaisin luoda nettisivun, jolla käyttäjä voi piirtää itse numeron, joka syötetään neuroverkkoon.
 ## Laajojen kielimallien (ChatGPT yms.) käyttö. Mainitse mitä mallia on käytetty ja miten. Mainitse myös mikäli et ole käyttänyt. Tämä on tärkeää!
-Olen käyttänyt ChatGPT:tä selittämään tarkemmin neuroverkkojen käsitteitä, jotka eivät selvenneet minulle videoista tai lähteistä. Pääosin Backpropagation. Käytin myös ChatGPT:tä selittämään minulle, miten numpy toimii ja mitä sen tähän projektiin oleellisimmat komennot toimivat (dot, zip, outer, npz).
+Olen käyttänyt ChatGPT:tä selittämään tarkemmin neuroverkkojen käsitteitä, jotka eivät selvenneet minulle videoista tai lähteistä. Pääosin Backpropagation. Käytin myös ChatGPT:tä selittämään minulle, miten numpy toimii ja miten sen tähän projektiin oleellisimmat komennot toimivat (dot, zip, outer, npz).
 Viimeiseksi olen käyttänyt ChatGPT:tä selventämään neuroverkkojen monimutkaisia matemaattisia kaavoja, taas pääosin backpropagationissa. 
 ## Lähteet, joita olet käyttänyt, vain ne joilla oli merkitystä työn kannalta.
 [3Blue1Brownin neuroverkko sarja](https://www.youtube.com/watch?v=aircAruvnKk&list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi&index=)
