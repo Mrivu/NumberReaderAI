@@ -88,41 +88,41 @@ class Network():
     def softmax(self, output):
         return np.exp(output) / np.sum(np.exp(output))
     
-    def test_network(self, batch_size):
-        accuracy = 0.0
-        ## Fix grayscale value input / 255
-        for i in range(batch_size):
-            test_image, test_label = dh.random_image_test()
-            feed_forward_output = self.pass_all_layers(dh.grayscale_to_sigmoid(test_image))
-            prediction = np.argmax(feed_forward_output)
-            if prediction == test_label:
-                accuracy += 1.0
-        return accuracy / batch_size
+    def test_network(self, image, label):
+        feed_forward_output = self.pass_all_layers(dh.grayscale_to_sigmoid(image))
+        prediction = np.argmax(feed_forward_output)
+        if prediction == label:
+            return True
+        return False
 
-
-    def gradient_descent(self, batch_size):
+    def gradient_descent(self, epochs):
         accuracy = 0
-        for i in range(batch_size):
-            train_image, train_label = dh.random_image_train()
-            feed_forward_output = self.pass_all_layers(dh.grayscale_to_sigmoid(train_image))
+        print("Traning Algorithim with " + str(epochs) + " epochs... ")
+        for e in range(epochs):
+            train_images, train_labels = dh.get_shuffled_training_data()
+            size = len(train_images)
+            for i in range(size):
+                train_image = train_images[i]
+                train_label = train_labels[i]
+                feed_forward_output = self.pass_all_layers(dh.grayscale_to_sigmoid(train_image))
 
-            #cost = self.cost_function(train_label, feed_forward_output)
-            weight_change, bias_change = self.backpropagation(train_label, feed_forward_output)
+                #cost = self.cost_function(train_label, feed_forward_output)
+                weight_change, bias_change = self.backpropagation(train_label, feed_forward_output)
 
-            prediction = np.argmax(feed_forward_output)
-            if prediction == train_label:
-                accuracy += 1.0
+                prediction = np.argmax(feed_forward_output)
+                if prediction == train_label:
+                    accuracy += 1.0
 
-            learning_rate = 0.01
+                learning_rate = 0.01
 
-            for layer_num in range(len(self.weights)):
-                self.weights[layer_num] -= learning_rate * weight_change[layer_num]
-                for b in range(len(self.biases[layer_num])):
-                    self.biases[layer_num][b] -= learning_rate * bias_change[layer_num][b]
-            if i % 100 == 0:
-                print("Iter: " + str(i))
-                print("Train accuracy: " + str(accuracy / 100))
-                accuracy = 0
+                for layer_num in range(len(self.weights)):
+                    self.weights[layer_num] -= learning_rate * weight_change[layer_num]
+                    for b in range(len(self.biases[layer_num])):
+                        self.biases[layer_num][b] -= learning_rate * bias_change[layer_num][b]
+                if i % (size / 10) == 0:
+                    print("Epoch " + str(e+1) + " - Training progress: " + str((i/size) * 100 ) + "%")
+                    print("Epoch " + str(e+1) + " - Train accuracy: " + str(accuracy / (size / 10)))
+                    accuracy = 0
 
     def backpropagation(self, correct_number, values):
         weight_change = []

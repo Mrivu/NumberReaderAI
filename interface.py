@@ -10,6 +10,7 @@ class Interface():
         self.label = None
         self.weights = None
         self.biases = None
+        self.epochs = 30
 
     def display_interface(self):
         os.system('cls||clear')
@@ -22,6 +23,7 @@ class Interface():
         print("- saveW (take current weights and save them)")
         print("- ff (feed forward - send image through the network or random data if image not loaded)")
         print("- train (train the neural network)")
+        print("- epochs (set train size)")
         print("- test (test the neural network)")
         print("- load (load random image from database)")
         print("- view (view loaded image from database)")
@@ -39,6 +41,8 @@ class Interface():
                 else:
                     print("Loading weights and biases")
                 self.network = Network([784, 16, 16, 10], self.weights, self.biases)
+                self.weights = self.network.weights
+                self.biases = self.network.biases
                 print("Network generated")
                 return input("- Press enter to continue > ")
             case "getw":
@@ -58,13 +62,27 @@ class Interface():
                 return input("- Press enter to continue > ")
             case "train":
                 if self.network is not None:
-                    self.network.gradient_descent(500000)
+                    self.network.gradient_descent(self.epochs)
                 else:
                     print("Error: No network generated")
                 return input("- Press enter to continue > ")
+            case "epochs":
+                new_amount = input("- Enter number of epochs (How many times the entire database is trained on) > ")
+                if new_amount.isnumeric():
+                    self.epochs = int(new_amount)
+                else:
+                    print("Error: Please enter a number!")
+                return input("- Press enter to continue > ")
             case "test":
                 if self.network is not None:
-                    print(self.network.test_network(100))
+                    accuracy = 0.0
+                    images, labels = data_handler.get_test_data()
+                    size = len(images)
+                    print("Testing data...")
+                    for i in range(size):
+                        if self.network.test_network(images[i], labels[i]):
+                            accuracy += 1.0
+                    print(accuracy / size)
                 else:
                     print("Error: No network generated")
                 return input("- Press enter to continue > ")

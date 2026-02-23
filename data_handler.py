@@ -10,6 +10,16 @@ test_images, test_labels = mndata.load_testing()
 def get_training_data():
     return training_images, training_labels
 
+def get_shuffled_training_data():
+    shuffled_images = []
+    shuffled_labels = []
+    index_shuf = list(range(len(training_images)))
+    random.shuffle(index_shuf)
+    for i in index_shuf:
+        shuffled_images.append(training_images[i])
+        shuffled_labels.append(training_labels[i])
+    return shuffled_images, shuffled_labels
+
 def get_test_data():
     return test_images, test_labels
 
