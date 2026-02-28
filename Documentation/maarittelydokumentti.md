@@ -12,10 +12,11 @@ Käsin kirjoitettujen numeroiden tunnistus.
 ### Mitä syötteitä ohjelma saa ja miten niitä käytetään?
 Ohjelma saa syötteeksi grayscale kuvan käsin piirretystä numerosta, jonka treenattu neural network analysoi ja kertoo mikä numero on kyseessä.
 ### Tavoitteena olevat aika- ja tilavaativuudet (esim. O-analyysit)
-Network pitää erikseen treenata, jonka jälkeen numeroiden lukeminen on nopeaa.
-### Tästä kannattaa selvittää niin paljon kuin voitte. Ei ole tarkoitus todistaa tai mitata mitään itse.
-### Käytä aika ja tilavaatimuuksia apuvälineenä ymmärtääksenne, miten työhön kannattaa asennoitua.
-### Nämä kannattaa katsoa wikipediasta ja varmistaa, että ymmärrätte oman algoritmin kohdalla mistä ne tulevat. Miksi algoritmisi tarvitsee sen verran aikaa?
+Kun neuroverkkoa treenataan, on aikavaatiumus seuraava:
+```
+O(784*h + h² + h*10) * 2 * datan suuruus.
+```
+Jossa h on nodejen määrä layerissa.
 ### Lähteet, joita aiot käyttää.
 3Blue1Brownin erittäin hyvin tehdyt videot neuroverkoista.
 ### Harjoitustyön Ydin.

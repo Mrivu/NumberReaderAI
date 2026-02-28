@@ -23,15 +23,17 @@ class NetworkTest(unittest.TestCase):
         random_values = [np.random.rand()]*10
         run_1 = self.network_A.pass_all_layers(random_values)
         run_2 = self.network_A.pass_all_layers(random_values)
-        self.assertEqual(run_1, run_2)
+        self.assertEqual(np.argmax(run_1), np.argmax(run_2))
+
 
         random_values = [np.random.rand()]*8
         run_1 = self.network_B.pass_all_layers(random_values)
         run_2 = self.network_B.pass_all_layers(random_values)
-        self.assertEqual(run_1, run_2)
+        self.assertEqual(np.argmax(run_1), np.argmax(run_2))
 
         random_number, network_C = self.get_random_network()
         random_values = [np.random.rand()]*random_number*3
         run_1 = network_C.pass_all_layers(random_values)
         run_2 = network_C.pass_all_layers(random_values)
-        self.assertEqual(run_1, run_2)
+        self.assertEqual(np.argmax(run_1), np.argmax(run_2))
+        

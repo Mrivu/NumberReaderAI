@@ -45,6 +45,3 @@ poetry run coverage report -m
 
 ### Run Pylint
 poetry run pylint .
-
-### Coverage
-![coverage](coverage.png)

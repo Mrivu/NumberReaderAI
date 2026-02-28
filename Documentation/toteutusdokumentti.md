@@ -3,9 +3,11 @@ Ohjelma on jaettu network.py, data_handler.py ja interface.py.
 Data_handler käsittelee ja hakee tietokannasta dataa, kun taas network käsittelee kaiken, joka liittyy neuroverkkoon.
 Interface yhdistää kummatkin ja luo käyttöliittymän.
 ## Saavutetut aika- ja tilavaativuudet (esim. O-analyysit pseudokoodista)
-En ole oiken varma näistä.
-## Suorituskyky- ja O-analyysivertailu (mikäli sopii työn aiheeseen)
-En ole oiken varma näistä.
+Kun neuroverkkoa treenataan, on aikavaatiumus seuraava:
+```
+O(784*h + h² + h*10) * 2 * datan suuruus.
+```
+Jossa h on nodejen määrä layerissa.
 ## Työn mahdolliset puutteet ja parannusehdotukset
 Haluaisin luoda nettisivun, jolla käyttäjä voi piirtää itse numeron, joka syötetään neuroverkkoon.
 ## Laajojen kielimallien (ChatGPT yms.) käyttö. Mainitse mitä mallia on käytetty ja miten. Mainitse myös mikäli et ole käyttänyt. Tämä on tärkeää!
