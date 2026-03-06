@@ -1,7 +1,7 @@
-from network import Network
-import data_handler as data_handler
 import os
 import numpy as np
+from network import Network
+import data_handler as data_handler
 
 class Interface():
     def __init__(self):
@@ -21,7 +21,8 @@ class Interface():
         print("- generate (generate new network)")
         print("- getW (get existing weigths)")
         print("- saveW (take current weights and save them)")
-        print("- ff (feed forward - send image through the network or random data if image not loaded)")
+        print("- ff (feed forward - send image through the network "
+        "or random data if image not loaded)")
         print("- train (train the neural network)")
         print("- epochs (set train size)")
         print("- test (test the neural network)")
@@ -30,7 +31,7 @@ class Interface():
         print("- remove (remove loaded image from database)")
         print("- Read README for more detailed instructions")
         return input("- Enter Command > ")
-    
+
     def handle_commands(self, command):
         print()
         match str.lower(command):
@@ -67,7 +68,8 @@ class Interface():
                     print("Error: No network generated")
                 return input("- Press enter to continue > ")
             case "epochs":
-                new_amount = input("- Enter number of epochs (How many times the entire database is trained on) > ")
+                new_amount = input("- Enter number of epochs "
+                "(How many times the entire database is trained on) > ")
                 if new_amount.isnumeric():
                     self.epochs = int(new_amount)
                 else:
@@ -86,12 +88,29 @@ class Interface():
                 else:
                     print("Error: No network generated")
                 return input("- Press enter to continue > ")
+            case "finderror":
+                if self.network is not None:
+                    images, labels = data_handler.get_shuffled_test_data()
+                    size = len(images)
+                    error_image = None
+                    error_label = None
+                    print("Finding errors...")
+                    for i in range(size):
+                        if not self.network.test_network(images[i], labels[i]):
+                            error_image = images[i]
+                            error_label = labels[i]
+                    self.image = error_image
+                    self.label = error_label
+                    print("Error image loaded")
+                else:
+                    print("Error: No network generated")
             case "ff":
                 if self.network is None:
                     print("Error: No network generated")
                     return input("- Press enter to continue > ")
                 if self.image is not None:
-                    answer = self.network.pass_all_layers(data_handler.grayscale_to_sigmoid(self.image))
+                    answer = self.network.pass_all_layers(
+                        data_handler.grayscale_to_sigmoid(self.image))
                     prediction = np.argmax(answer)
                     print("Prediction: " + str(prediction))
                     print("Correct Label: " + str(self.label))

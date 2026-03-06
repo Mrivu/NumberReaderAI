@@ -1,6 +1,6 @@
-from mnist import MNIST
 import random
 import numpy as np
+from mnist import MNIST
 
 mndata = MNIST('datasets')
 
@@ -22,6 +22,16 @@ def get_shuffled_training_data():
 
 def get_test_data():
     return test_images, test_labels
+
+def get_shuffled_test_data():
+    shuffled_images = []
+    shuffled_labels = []
+    index_shuf = list(range(len(test_images)))
+    random.shuffle(index_shuf)
+    for i in index_shuf:
+        shuffled_images.append(test_images[i])
+        shuffled_labels.append(test_labels[i])
+    return shuffled_images, shuffled_labels
 
 def random_image_test():
     index = random.randrange(0, len(test_images))
