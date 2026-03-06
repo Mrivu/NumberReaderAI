@@ -24,6 +24,7 @@ class Interface():
         print("- ff (feed forward - send image through the network "
         "or random data if image not loaded)")
         print("- train (train the neural network)")
+        print("- finderror (load image the neural network guesses wrong)")
         print("- epochs (set train size)")
         print("- test (test the neural network)")
         print("- load (load random image from database)")

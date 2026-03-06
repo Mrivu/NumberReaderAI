@@ -22,6 +22,10 @@ It also gives each weight and bias a random value.
 Feed loaded image through neural network and see the output.
 #### train
 Train the network. Higher percentages may require multiple trains.
+#### epochs
+Change the amount of epochs trainin uses.
+#### finderror
+Load an image from test database that the network doesn't guess correctly.
 #### test
 Test the network's accuracy.
 #### savew
@@ -44,4 +48,4 @@ poetry run coverage run --branch -m pytest tests
 poetry run coverage report -m
 
 ### Run Pylint
-poetry run pylint .
+poetry run pylint network.py data_handler.py

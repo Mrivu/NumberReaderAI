@@ -1,6 +1,6 @@
 import math
-import data_handler as dh
 import numpy as np
+import data_handler as dh
 
 ## np.random.randn(x, y)
 ### Create matrix n x columns and y rows with random values
@@ -39,10 +39,6 @@ class Network():
         self.current_layer = 0
         self.current_layer_values = None
         self.previous_values = []
-
-    # Not in use
-    def ReLU(self, node_value): ## a is a singular node on the layer/matrix
-        return np.maximum(0, node_value)
 
     def sigmoid(self, node_value):
         """
@@ -141,7 +137,7 @@ class Network():
         if prediction == label:
             return True
         return False
-    
+
     def gradient_descent(self, epochs):
         """
         Train neural network. 
